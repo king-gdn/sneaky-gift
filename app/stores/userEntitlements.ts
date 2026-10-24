@@ -1,7 +1,7 @@
 export const useUserEntitlementsStore = defineStore('userEntitlements', () => {
 
   const shouldPersist = useState('shouldPersist', ()=>true)
-  const { isSignedIn  } = useAuth()
+  const { isSignedIn  } = useAppAuth()
 
   const listStore = useSecretSantaListStore()
 

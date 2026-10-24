@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const store = useSecretSantaListStore()
 
-const {isSignedIn} = useAuth()
+const {isSignedIn} = useAppAuth()
 
 const route = useRoute()
 const {id} = route.params

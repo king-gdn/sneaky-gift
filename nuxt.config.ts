@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import {dark} from '@clerk/themes'
 
+// Without Clerk keys, `nuxt dev` uses the fixture-user sign-in (modules/dev-auth) instead of Clerk.
+const useDevAuth = process.env.NODE_ENV !== 'production' && !process.env.NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-07-30',
   // Nuxt Modules
@@ -10,7 +13,7 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxt/eslint',
     '@nuxt/ui',
-    'vue-clerk/nuxt',
+    ...(useDevAuth ? [] : ['@clerk/nuxt']),
     '@nuxt/image',
     '@nuxt/fonts',
     '@nuxt/test-utils/module',

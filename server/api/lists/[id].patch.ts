@@ -1,4 +1,3 @@
-import {getAuth} from "vue-clerk/server"
 import {ListInsertSchema} from '~~/shared/types/lists'
 import type { InferInsertModel} from "drizzle-orm";
 import {inArray} from "drizzle-orm";
@@ -7,7 +6,7 @@ import {buildConflictUpdateColumns, and, useDrizzle, eq, tables} from "~~/server
 import {deleteMembershipToList} from "~~/server/utils/lists";
 
 export default defineEventHandler(async (evt) => {
-  const {userId} = getAuth(evt)
+  const userId = getUserId(evt)
 
   if (!userId) {
     setResponseStatus(evt, 401)

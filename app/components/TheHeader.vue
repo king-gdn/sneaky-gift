@@ -18,7 +18,10 @@ function selectHandler() {
   return drawerOpen.value = false
 }
 
-const {isSignedIn} = useAuth()
+const {isSignedIn} = useAppAuth()
+const DevSignIn = import.meta.dev && useRuntimeConfig().public.devAuth
+  ? defineAsyncComponent(() => import('~~/modules/dev-auth/runtime/DevSignIn.vue'))
+  : null
 
 const getMenuItems = () => {
   const items = isSignedIn.value
@@ -55,14 +58,13 @@ watch(isSignedIn, () => {
         </template>
       </UDrawer>
       <ClientOnly>
-        <SignedOut>
-          <SignInButton v-slot="props" mode="modal" class="cursor-pointer">
-            <UButton v-bind="props" label="Sign In"/>
+        <DevSignIn v-if="DevSignIn"/>
+        <template v-else>
+          <UserButton v-if="isSignedIn"/>
+          <SignInButton v-else mode="modal" class="cursor-pointer">
+            <UButton label="Sign In"/>
           </SignInButton>
-        </SignedOut>
-        <SignedIn>
-          <UserButton/>
-        </SignedIn>
+        </template>
       </ClientOnly>
     </div>
   </div>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { SignInButton } from 'vue-clerk'
 defineProps<{redirectUrl?: string}>()
+const DevSignIn = import.meta.dev && useRuntimeConfig().public.devAuth
+  ? defineAsyncComponent(() => import('~~/modules/dev-auth/runtime/DevSignIn.vue'))
+  : null
 const open = defineModel<boolean>('open', { default: false })
 </script>
 
@@ -15,8 +17,9 @@ const open = defineModel<boolean>('open', { default: false })
           <li>Blind Drawing</li>
           <li>and more</li>
         </ul>
-        <SignInButton v-slot="props" as-child class="flex-none" mode="modal" :force-redirect-url="redirectUrl">
-          <UButton v-bind="props" label="Sign In" size="lg" @click="open = false; props.handler();"/>
+        <DevSignIn v-if="DevSignIn" cta/>
+        <SignInButton v-else class="flex-none" mode="modal" :force-redirect-url="redirectUrl">
+          <UButton label="Sign In" size="lg" @click="open = false"/>
         </SignInButton>
       </div> 
     </template>

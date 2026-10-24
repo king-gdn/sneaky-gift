@@ -1,6 +1,5 @@
 import type {TabbedNavigationPageItem} from "#shared/types/ui";
 import type {RouteLocationNormalizedGeneric} from "vue-router";
-import {useClerkProvider} from "vue-clerk";
 import {until} from "@vueuse/core";
 
 export default function useCreateFlowController() {
@@ -77,7 +76,7 @@ export default function useCreateFlowController() {
     return navigateTo('/create/1-name/')
   }
 
-  const {isLoaded, isSignedIn} = useAuth()
+  const {isLoaded, isSignedIn} = useAppAuth()
 
   /*
   create flow handling when we're not authenticated
@@ -128,10 +127,8 @@ export default function useCreateFlowController() {
   const route = useRoute()
 
   async function handlePageEntry(toRoute: RouteLocationNormalizedGeneric) {
-    // this helps with https://github.com/wobsoriano/vue-clerk/issues/13
-    const {isClerkLoaded} = useClerkProvider()
     if (import.meta.client) {
-      await until(isClerkLoaded).toBe(true)
+      await until(isLoaded).toBe(true)
     }
 
     return (isLoaded.value && !isSignedIn.value)

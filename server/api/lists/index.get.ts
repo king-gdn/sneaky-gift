@@ -1,9 +1,8 @@
-import {getAuth} from "vue-clerk/server"
 import {flattenListResponse} from "~~/server/utils/lists";
 import { useDrizzle, eq, tables } from "~~/server/utils/drizzle";
 
 export default defineEventHandler(async (evt) => {
-  const {userId} = getAuth(evt)
+  const userId = getUserId(evt)
 
   if (!userId) {
     setResponseStatus(evt, 401)
