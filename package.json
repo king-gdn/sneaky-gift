@@ -28,7 +28,7 @@
     "@pinia/nuxt": "^0.8.0",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.15",
-    "@vueuse/motion": "^2.2.6",
+    "@vueuse/motion": "^3.0.3",
     "drizzle-orm": "^0.36.4",
     "drizzle-zod": "^0.5.1",
     "nitropack": "^2.13.5",
