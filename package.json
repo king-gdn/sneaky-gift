@@ -40,7 +40,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.18",
+    "@iconify-json/lucide": "^1.2.147",
     "@inspira-ui/plugins": "^0.0.1",
     "@nuxt/eslint-config": "^0.7.6",
     "@nuxt/test-utils": "^4.3.4",
