@@ -73,7 +73,7 @@ const allReveal = useState('allReveal', () => false)
 const open = useState(()=>false)
 
 const toast = useToast()
-const modal = useModal()
+const overlay = useOverlay()
 const route = useRoute()
 const {isLoaded, isSignedIn} = useAuth()
 
@@ -92,7 +92,10 @@ async function onSubmit(_event?: FormSubmitEvent<InputStateSchema>) {
     // return navigateTo('/lists/')
     return
   }
-  modal.open(LoginCTA, {title: "Log in", redirectUrl: route.fullPath})
+  overlay.create(LoginCTA, {
+    props: { redirectUrl: route.fullPath },
+    destroyOnClose: true
+  }).open()
 }
 
 const {

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { SignInButton } from 'vue-clerk'
 defineProps<{redirectUrl?: string}>()
-const modal = useModal()
+const open = defineModel<boolean>('open', { default: false })
 </script>
 
 <template>
-  <UModal title="Log in" >
+  <UModal v-model:open="open" title="Log in" >
 
     <template #body>
       <div class="flex flex-col mx-auto ps-4">
@@ -16,7 +16,7 @@ const modal = useModal()
           <li>and more</li>
         </ul>
         <SignInButton v-slot="props" as-child class="flex-none" mode="modal" :force-redirect-url="redirectUrl">
-          <UButton v-bind="props" label="Sign In" size="lg" @click="modal.close(); props.handler();"/>
+          <UButton v-bind="props" label="Sign In" size="lg" @click="open = false; props.handler();"/>
         </SignInButton>
       </div> 
     </template>

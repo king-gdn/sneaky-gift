@@ -10,7 +10,7 @@ const props = defineProps<{
   members: ListSchema
 }>()
 
-interface SelectMenuItemWithValue extends SelectMenuItem {
+type SelectMenuItemWithValue = SelectMenuItem & {
   label: string,
   disabled: boolean
 }
