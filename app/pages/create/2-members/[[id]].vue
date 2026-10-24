@@ -73,7 +73,7 @@ async function addMember() {
 
 async function deleteMember(index: number) {
   // this seems really inefficent to loop through at least 3 times
-  const nameToRemove = `${store.inputState.members[index].name}`
+  const nameToRemove = `${store.inputState.members[index]!.name}`
 
   store.invalidateCurrentScenario()
 

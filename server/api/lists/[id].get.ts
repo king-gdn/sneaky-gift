@@ -16,6 +16,13 @@ export default defineEventHandler(async (evt) => {
 
   const {id} = getRouterParams(evt)
 
+  if (!id) {
+    throw createError({
+      statusCode: 400,
+      message: 'Missing list id'
+    })
+  }
+
   const db = useDrizzle()
 
   const qbResult = await db.query.lists.findFirst({

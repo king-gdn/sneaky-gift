@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {ContextMenuItem} from "@nuxt/ui/runtime/types";
+import type {ContextMenuItem} from "@nuxt/ui";
 import {useClipboard} from '@vueuse/core'
 
 
@@ -38,9 +38,9 @@ const items = ref([
 
 const url = useRequestURL()
 
-const link = ref(url.protocol + "//" + url.host + store.getInviteLink(id.toString(), props.memberId))
+const link = ref(url.protocol + "//" + url.host + store.getInviteLink(id!.toString(), props.memberId ?? ''))
 
-const {copy, copied} = useClipboard(link)
+const {copy, copied} = useClipboard({ source: link })
 
 const toast = useToast()
 

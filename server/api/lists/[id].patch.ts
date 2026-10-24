@@ -18,6 +18,13 @@ export default defineEventHandler(async (evt) => {
   const result = await readValidatedBody(evt, parse)
   const {id} = getRouterParams(evt)
 
+  if (!id) {
+    throw createError({
+      statusCode: 400,
+      message: 'Missing list id'
+    })
+  }
+
   const db = useDrizzle()
   const list = await db.select().from(tables.lists).where(and(
     eq(tables.lists.owner, userId),

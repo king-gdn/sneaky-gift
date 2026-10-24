@@ -7,6 +7,13 @@ export default defineEventHandler(async (evt) => {
 
   const {list, member } = getRouterParams(evt)
 
+  if (!list || !member) {
+    throw createError({
+      statusCode: 400,
+      statusText: 'Missing list or member'
+    })
+  }
+
   const db = useDrizzle()
 
   const result = await db.select().from(tables.membershipToList).where(
@@ -16,7 +23,7 @@ export default defineEventHandler(async (evt) => {
   )
   ).innerJoin(tables.lists, eq(tables.membershipToList.list, tables.lists.id)).innerJoin(tables.members, eq(tables.members.id, tables.membershipToList.memberId)).get()
 
-  if (!result && !result.lists) {
+  if (!result) {
     throw createError({
       status: 400,
       statusText: "Something went wrong"
@@ -24,8 +31,16 @@ export default defineEventHandler(async (evt) => {
 
   }
 
-  const currentScenario = JSON.parse(result.lists.currentScenario)
+  const currentScenario = JSON.parse(result.lists.currentScenario as string) as number[]
   const pairedMemberPosition = currentScenario[result.membershipToList.position]
+
+  if (pairedMemberPosition === undefined) {
+    throw createError({
+      statusCode: 404,
+      message: `Cannot find a match`
+    })
+  }
+
   const pairedMember = await db.select().from(tables.membershipToList).where(
     and(
       eq(membershipToList.list, list),

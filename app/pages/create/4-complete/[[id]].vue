@@ -118,6 +118,10 @@ watch(error, () => {
 
 
 const fetchFn = useRequestFetch()
+const request = fetchFn as unknown as (
+  url: string,
+  options: { method: string, body: ListInsertSchemaType }
+) => Promise<unknown>
 
 const {
   mutate: createList,
@@ -126,7 +130,7 @@ const {
   error: createListError
 } = useMutation({
   mutation: (list: ListInsertSchemaType) => {
-    return fetchFn('/api/lists', {
+    return request('/api/lists', {
       method: 'POST',
       body: list
     })
@@ -139,7 +143,8 @@ const {
   error: updateListError
 } = useMutation({
   mutation: (list: ListInsertSchemaType) => {
-    return fetchFn(`/api/lists/${route.params.id}`, {
+    const listUrl: string = `/api/lists/${route.params.id}`
+    return request(listUrl, {
       method: 'PATCH',
       body: list,
     })

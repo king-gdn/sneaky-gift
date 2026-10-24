@@ -1,4 +1,4 @@
-import type {lists, type members, type membershipToList} from "~~/server/database/schema";
+import type {lists, members, membershipToList} from "~~/server/database/schema";
 import {inArray} from "drizzle-orm";
 
 type List = typeof lists.$inferSelect

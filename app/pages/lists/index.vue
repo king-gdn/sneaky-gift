@@ -42,9 +42,21 @@
 
 const fetchFn = useRequestFetch()
 
+type ListSummary = {
+  id: string
+  name: string
+  membersLength: number
+  members: { name: string | null }[]
+}
+
+const request = fetchFn as unknown as <T>(
+  url: string,
+  options?: { method?: string }
+) => Promise<T>
+
 const {data: lists, refetch, isLoading} = useQuery({
   key: ['lists'],
-  query: () => fetchFn('/api/lists'),
+  query: () => request<ListSummary[]>('/api/lists'),
 })
 
 const toast = useToast()
@@ -56,7 +68,7 @@ const toast = useToast()
 // }
 
 const {mutate: deleteListItem} = useMutation({
-  mutation: (id: string) => fetchFn(`/api/lists/${id}`, {
+  mutation: (id: string) => request(`/api/lists/${id}`, {
     method: 'delete',
   }),
   onSettled: async () => {

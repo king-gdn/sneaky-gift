@@ -2,7 +2,6 @@
   import {useSecretSantaListStore} from "#imports";
 
   const { inputState } = storeToRefs(useSecretSantaListStore())
-  const { id } = storeToRefs(useUserEntitlementsStore())
 
   const notice = computed(()=>{
     return inputState.value.id ? `Editing ${inputState?.value.name}` : `Creating ${inputState?.value.name}`
