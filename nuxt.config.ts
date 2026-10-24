@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxthub/core',
     '@nuxt/eslint',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     'vue-clerk/nuxt',
     '@nuxt/image',
     '@nuxt/fonts',
@@ -22,8 +22,6 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     '@nuxtjs/mdc'
   ],
-  uiPro: {
-  },
   clerk: {
     appearance: {
       baseTheme: dark
