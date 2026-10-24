@@ -75,7 +75,7 @@ const open = useState(()=>false)
 const toast = useToast()
 const overlay = useOverlay()
 const route = useRoute()
-const {isLoaded, isSignedIn} = useAuth()
+const {isLoaded, isSignedIn} = useAppAuth()
 
 async function onSubmit(_event?: FormSubmitEvent<InputStateSchema>) {
   if (isLoaded.value && isSignedIn.value) {

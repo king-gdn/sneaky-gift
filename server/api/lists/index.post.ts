@@ -1,4 +1,3 @@
-import { getAuth } from "vue-clerk/server"
 import { ListInsertSchema, ListInsertShape } from '~~/shared/types/lists'
 import type { InferInsertModel } from "drizzle-orm";
 import { randomUUID } from 'uncrypto'
@@ -6,7 +5,7 @@ import { useDrizzle, eq, tables } from "~~/server/utils/drizzle";
 
 
 export default defineEventHandler(async (evt) => {
-  const { userId } = getAuth(evt)
+  const userId = getUserId(evt)
 
   if (!userId) {
     setResponseStatus(evt, 401)

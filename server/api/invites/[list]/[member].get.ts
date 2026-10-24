@@ -1,5 +1,4 @@
 import {membershipToList} from "~~/server/database/schema";
-import {getAuth} from "vue-clerk/server";
 import { useDrizzle, and, eq, tables } from "~~/server/utils/drizzle";
 
 

@@ -1,4 +1,3 @@
-import { getAuth } from "vue-clerk/server"
 import { eq, and, getTableColumns } from 'drizzle-orm'
 import type { members, membershipToList } from "~~/server/database/schema";
 import { lists } from "~~/server/database/schema"
@@ -7,7 +6,7 @@ import { useDrizzle, tables } from "~~/server/utils/drizzle";
 
 
 export default defineEventHandler(async (evt) => {
-  const {userId} = getAuth(evt)
+  const userId = getUserId(evt)
 
   if (!userId) {
     setResponseStatus(evt, 401)

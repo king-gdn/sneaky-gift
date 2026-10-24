@@ -37,7 +37,7 @@ definePageMeta({
   middleware: [createFlow],
 });
 
-const { isSignedIn } = useAuth()
+const { isSignedIn } = useAppAuth()
 const store = useSecretSantaListStore()
 
 const { isPersisting } = storeToRefs(useUserEntitlementsStore())
