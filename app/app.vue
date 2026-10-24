@@ -27,7 +27,7 @@ useHeadSafe({
 
 <style>
 @import "tailwindcss";
-@import "@nuxt/ui-pro";
+@import "@nuxt/ui";
 
 @theme {
   --font-display: "Lilita One", "sans-serif";

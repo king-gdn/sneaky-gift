@@ -3,7 +3,7 @@
 type Exclusions = number[][]
 
 function getRandomItem<T>(array: T[]) {
-  return array[Math.floor((Math.random()*array.length))];
+  return array[Math.floor((Math.random()*array.length))]!;
 }
 
 export function getPermutations<T>(arr: T[]): T[][] {
@@ -14,7 +14,7 @@ export function getPermutations<T>(arr: T[]): T[][] {
   const result: T[][] = [];
 
   for (let i = 0; i < arr.length; i++) {
-    const current = arr[i];
+    const current = arr[i]!
     const rest = arr.slice(0, i).concat(arr.slice(i + 1));
     const perms = getPermutations(rest);
 

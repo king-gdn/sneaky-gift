@@ -73,7 +73,7 @@ const allReveal = useState('allReveal', () => false)
 const open = useState(()=>false)
 
 const toast = useToast()
-const modal = useModal()
+const overlay = useOverlay()
 const route = useRoute()
 const {isLoaded, isSignedIn} = useAuth()
 
@@ -92,7 +92,10 @@ async function onSubmit(_event?: FormSubmitEvent<InputStateSchema>) {
     // return navigateTo('/lists/')
     return
   }
-  modal.open(LoginCTA, {title: "Log in", redirectUrl: route.fullPath})
+  overlay.create(LoginCTA, {
+    props: { redirectUrl: route.fullPath },
+    destroyOnClose: true
+  }).open()
 }
 
 const {
@@ -118,6 +121,10 @@ watch(error, () => {
 
 
 const fetchFn = useRequestFetch()
+const request = fetchFn as unknown as (
+  url: string,
+  options: { method: string, body: ListInsertSchemaType }
+) => Promise<unknown>
 
 const {
   mutate: createList,
@@ -126,7 +133,7 @@ const {
   error: createListError
 } = useMutation({
   mutation: (list: ListInsertSchemaType) => {
-    return fetchFn('/api/lists', {
+    return request('/api/lists', {
       method: 'POST',
       body: list
     })
@@ -139,7 +146,8 @@ const {
   error: updateListError
 } = useMutation({
   mutation: (list: ListInsertSchemaType) => {
-    return fetchFn(`/api/lists/${route.params.id}`, {
+    const listUrl: string = `/api/lists/${route.params.id}`
+    return request(listUrl, {
       method: 'PATCH',
       body: list,
     })

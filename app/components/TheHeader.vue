@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import TheLogo from './TheLogo.vue';
-import type {NavigationMenuItem} from "#ui/types";
 
 const defaultMenuItems =
   [{
     label: 'About',
     to: '/about',
-  },] satisfies NavigationMenuItem[]
+  },]
 
 const authMenuItems = [{
   label: 'Lists',
   to: '/lists',
 },
 
-] satisfies NavigationMenuItem[]
+]
 
 function selectHandler() {
   return drawerOpen.value = false
@@ -22,10 +21,9 @@ function selectHandler() {
 const {isSignedIn} = useAuth()
 
 const getMenuItems = () => {
-  let items: NavigationMenuItem[] = defaultMenuItems
-  if (isSignedIn.value) {
-    items = [...authMenuItems, ...defaultMenuItems]
-  }
+  const items = isSignedIn.value
+    ? [...authMenuItems, ...defaultMenuItems]
+    : defaultMenuItems
   return items.map((row) => {
     return {
       onSelect() {selectHandler()},

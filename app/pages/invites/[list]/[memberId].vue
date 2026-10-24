@@ -12,10 +12,14 @@ if (!list && !memberId) {
   throwError()
 }
 
+type InviteMember = { name: string | null }
+type InviteResponse = { list: string, from: InviteMember, to: InviteMember }
+
 const fetchFn = useRequestFetch()
+const request = fetchFn as unknown as (url: string) => Promise<InviteResponse>
 const {data, ...rest} = useQuery({
   key: () => [`${list}`, `${memberId}`],
-  query: () => fetchFn(`/api/invites/${list}/${memberId}`),
+  query: () => request(`/api/invites/${list}/${memberId}`),
 })
 </script>
 
@@ -27,7 +31,7 @@ const {data, ...rest} = useQuery({
         <strong>{{ data.list }}</strong>
         gift exchange you're selecting for:
       </p>
-      <RevealableName :name="data.to.name" class="w-full"/>
+      <RevealableName :name="data.to.name ?? ''" class="w-full"/>
     </div>
   </UContainer>
 </template>
